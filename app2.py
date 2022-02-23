@@ -5,7 +5,7 @@ from datetime import datetime
 
 @app.route('/')
 def time():
-    now = datetime.now().hour
+    now = datetime.now().hour + 1
     if now < 7:
        return   render_template("index2.html", color="yellow",testo='È notte,sono le: ' + str(now))
     elif now < 13:
