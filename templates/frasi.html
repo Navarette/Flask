@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
 
 </head>
-<body>
+<style>
+    body{
+        background-image: url("static/sfondo.jpg");
+        background-size: cover;
+    }
+</style>
+<body id="frasiCelebri">
     <div id="frase">{{frase}}
         <div id="autore">-{{autore}}</div>
         </div>

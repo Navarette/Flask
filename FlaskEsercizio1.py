@@ -19,12 +19,15 @@ def home():
 def meteo():
   i = random.randint(0,9)
   if i < 2:   
-    immagine ='static/pioggia.jfif'
+    meteo = "PIOVOSO"
+    immagine ='static/pioggia.jpg'
   elif i < 5:
-    immagine ='static/nuvoloso.jfif'
+    meteo = "NUVOLOSO"
+    immagine ='static/nuvole.jpg'
   else:
-    immagine ='static/sole.jfif'
-  return render_template('meteo.html',meteo=immagine)
+    meteo = "SOLEGGIATO"
+    immagine ='static/sole.jpg'
+  return render_template('meteo.html',meteo=immagine,testo='Le previsioni indicano che il tempo è: '+ meteo)
 
 @app.route('/frasicelebri')
 def frasi():
@@ -35,8 +38,8 @@ def frasi():
 def tempo_mancante():
   oggi = datetime.now()
   finescuola = datetime(2022, 6, 8)
- 
-  return render_template('calendario.html',data = (finescuola - oggi).days)
+  data = (finescuola - oggi).days
+  return render_template('calendario.html',testo='Mancano'+' '+str(data)+' '+'giorni alla fine della scuola')
 
 
 if __name__ == '__main__':

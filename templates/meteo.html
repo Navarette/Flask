@@ -6,8 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meteo</title>
 </head>
-<body>
-    <img src="{{meteo}}" alt="img benvenuto">
+<body id="meteo">
+<style>
+img {
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
+}
+.titolo{
+ width: 50%;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ font-size: 3em;
+ color:azure;
+        }
+        </style>
+        <h1 class ='Titolo'><p>{{testo}}</p></h1>
+    <img src="{{meteo}}" alt="img Meteo" width="500" height="500" style="width:50%;">
 
 </body>
 </html>
