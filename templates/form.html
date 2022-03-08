@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="/data" method = "GET"> <!--tutto i dati inseriti sotto questa form vengono caricati nella pagina html-->
+        <p>Name <input type = "text" name = "Name" /></p>
+        <p>Sex <input type = "radio" name = "Sex" value="M" />M <input type = "radio" name = "Sex" value="F" />F <input type = "radio" name = "Sex" value="A" />Altro</p><!--tutti i radio button devono avere lo stesso nome(name='')-->
+        <p>Hobbies <input type = "checkbox" name = "Hobby1" value="Soccer"/>Soccer <!--possiamo selezionare più di una box-->
+                <input type = "checkbox" name = "Hobby2" value="Painting"/>Painting 
+                <input type = "checkbox" name = "Hobby3" value="Gaming"/>Gaming
+        </p>
+        City<select name="City">  
+            <option value=""></option>
+            <option>Milano</option>
+            <option>Roma</option>
+            <option>Napoli</option>
+          </select>
+        </p>
+        <p><textarea name="Comments" rows="4" cols="50"></textarea> <!--si possono scrivere tante righe-->
+        </p>
+        <p><input type = "submit" value = "Submit" /></p>
+    </form>
+</body>
+</html>
