@@ -8,10 +8,13 @@
 
 from flask import Flask, render_template,request
 app = Flask(__name__)
+
 lst = []
+
 @app.route('/' , methods=['GET'])
 def home():
     return render_template('registrazione.html')
+
 @app.route('/data' , methods=['GET'])
 def data():
 
@@ -25,17 +28,19 @@ def data():
      utente = {'Nome':nome,'Username':username,'Password':password,'Sex':sesso}
      lst.append(utente)
      print(lst)
-
      if sesso == 'M':
        saluto ='Benvenuto'
-     if sesso == 'F':
+     elif sesso == 'F':
        saluto ='Benvenuta'
-     if sesso == 'A':
+     else:
        saluto = 'Benvenut*'
        return render_template('welcome2.html',benvenuto=saluto)
 
 @app.route('/login' , methods=['GET'])
 def login():
+    username = request.args['Username']
+    password = request.args['Password']
+    
     return render_template('login.html')
 
 if __name__ == '__main__':
