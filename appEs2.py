@@ -28,20 +28,27 @@ def data():
      utente = {'Nome':nome,'Username':username,'Password':password,'Sex':sesso}
      lst.append(utente)
      print(lst)
-     if sesso == 'M':
-       saluto ='Benvenuto'
-     elif sesso == 'F':
-       saluto ='Benvenuta'
-     else:
-       saluto = 'Benvenut*'
-       return render_template('welcome2.html',benvenuto=saluto)
+    
+    return render_template('login.html')
+   
 
 @app.route('/login' , methods=['GET'])
 def login():
     username = request.args['Username']
     password = request.args['Password']
-    
-    return render_template('login.html')
+
+    for utente1 in lst:
+        if utente1['Username'] == username and utente1['Password'] == password:
+
+          if utente1['Sex'] == 'M':
+            saluto ='Benvenuto ' + utente1['Nome']
+          elif utente1['Sex'] == 'F':
+            saluto ='Benvenuta ' + utente1['Nome']
+          else:
+            saluto = 'Benvenut* ' + utente1['Nome']
+    return render_template('welcome2.html',benvenuto=saluto)
+
+ 
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)
