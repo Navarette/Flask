@@ -16,10 +16,23 @@ def home():
 
 @app.route('/data' , methods=['GET'])
 def data():
-    inputUtente = request.args['Input']
-    scelta = request.args['Bottone']
+
+    scelta = request.args['bottone']
     if scelta == 'R':
-        capoluogo = 
+        regione = request.args['Input']
+        for key,values in dizionario.items():
+            if regione == key:
+               capoluogo = value
+               return render_template('risposta.html',risposta = capoluogo)
+            return '<h1>La regione o capoluogo inserito non esistono</h1>'
+    else:
+        if scelta == 'C':
+            capoluogo = request.args['Input']
+        for key,values in dizionario.items():
+            if capoluogo == value:
+               regione = key
+               return render_template('risposta.html',risposta = regione)
+        return '<h1>La regione o capoluogo inserito non esistono</h1>'       
 
 
 if __name__ == '__main__':
