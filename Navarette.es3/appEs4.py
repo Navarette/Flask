@@ -15,7 +15,7 @@ def index():
 
 @app.route('/vaccini' , methods=['GET'])
 def vaccini():
-    regione = request.args['vaccini'] 
+    regione = request.args['Regioni'] 
     df3 = df[df['nome_area']== regione] 
     return render_template('vaccini1.html', tables=[df3.to_html()], titles=[''])
 if __name__ == '__main__':
