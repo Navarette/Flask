@@ -1,0 +1,8 @@
+<form action="/vaccini" method = "GET">
+    <select name="vaccini" id="vaccini" method="GET">
+        {% for i in reg%}
+        <option value="{{i}}" SELECTED>{{i}}</option>
+        {%endfor%}
+      </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
