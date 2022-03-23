@@ -1,0 +1,8 @@
+<form action="/fontanelleres" method = "GET">
+    <select name="Quartiere">
+        {% for i in quartieri%}
+        <option value="{{i}}" SELECTED>{{i}}</option>
+        {%endfor%}
+      </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
