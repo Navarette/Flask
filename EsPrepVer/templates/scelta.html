@@ -1,0 +1,8 @@
+<form action="/scelta" method = "GET">
+    <select name="quartieri" method="GET">
+        {% for i in qrt%}
+        <option value="{{i}}" SELECTED>{{i}}</option> 
+        {%endfor%}
+      </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
