@@ -10,6 +10,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+# pip install flask geopandas matplotlib contextily
+
 
 quartieri = gpd.read_file('/workspace/Flask/EsPrepVer/static/ds964_nil_wm-20220322T104418Z-001 (1).zip')
 fontanelle = gpd.read_file('/workspace/Flask/EsPrepVer/static/Fontanelle (1).zip')

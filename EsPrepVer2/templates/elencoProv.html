@@ -1,0 +1,9 @@
+Ecco le province della {{regione}}
+<form action="/elencoprov" method = "GET">
+    <select name="provincia">
+        {% for i in province%}
+        <option value="{{i}}" SELECTED>{{i}}</option>
+        {%endfor%}
+    </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
