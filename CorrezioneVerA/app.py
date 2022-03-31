@@ -16,14 +16,45 @@ stazioni = pd.read_csv('/workspace/Flask/CorrezioneVerA/static/coordfix_ripetito
 
 @app.route("/", methods=["GET"])
 def home():
-    return render_template("home.html")
+    return render_template("home1.html")
+
+@app.route("/selezione", methods=["GET"])
+def selezione():
+    scelta = request.args['scelta']
+    if scelta == 'es1':
+        return redirect(url_for('/num'))
+    elif scelta == 'es2':
+        return redirect(url_for('/input'))
+    else:
+        return redirect(url_for('/dropdown'))
+        
+
+
+
+
 
 @app.route("/num", methods=["GET"])
 def numero():
+    global risultato
 #numero stazioni per ogni municipio
     risultato = stazioni.groupby('MUNICIPIO')['OPERATORE'].count().reset_index()
 
     return render_template("elenco.html",risultato=risultato.to_html())
+
+@app.route("/grafico", methods=["GET"])
+def grafico():
+    #costruzione del grafico
+    fig, ax = plt.subplots(figsize = (5,5))
+    x = risultato.MUNICIPIO
+    y = risultato.OPERATORE
+
+    ax.bar(x,y,)
+    #visualizzazione grafico
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    
+    return Response(output.getvalue(), mimetype='image/png')
+    
 
 
 
