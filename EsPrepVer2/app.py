@@ -10,7 +10,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-# pip install flask geopandas matplotlib contextily
+# pip install flask geopandas matplotlib contextily pandas
 regioni = gpd.read_file('/workspace/Flask/EsPrepVer2/static/Reg01012021_g-20220328T122943Z-001.zip')
 province = gpd.read_file('/workspace/Flask/EsPrepVer2/static/ProvCM01012021_g-20220328T123739Z-001.zip')
 comuni = gpd.read_file('/workspace/Flask/EsPrepVer2/static/Com01012021_g-20220328T123755Z-001.zip')
