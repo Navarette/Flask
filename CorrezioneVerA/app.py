@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 stazioni = pd.read_csv('/workspace/Flask/CorrezioneVerA/static/coordfix_ripetitori_radiofonici_milano_160120_loc_final.csv',sep=';')
-stazionigeo = gpd.read_file('/workspace/Flask/CorrezioneVerA/static/coordfix_ripetitori_radiofonici_milano_160120_loc_final.csv')
+stazionigeo = gpd.read_file('/workspace/Flask/CorrezioneVerA/static/ds710_coordfix_ripetitori_radiofonici_milano_160120_loc_final.geojson')
 quartieri = gpd.read_file('/workspace/Flask/CorrezioneVerA/static/ds964_nil_wm-20220322T104418Z-001 (1).zip')
 @app.route("/", methods=["GET"])
 def home():
@@ -59,12 +59,60 @@ def input():
 
 @app.route("/ricerca", methods=["GET"])
 def ricerca():
+    global stazioniQuartiere ,quartiere
     nomeQuar = request.args['quartiere']
     quartiere = quartieri[quartieri.NIL.str.contains(nomeQuar)]
     stazioniQuartiere = stazionigeo[stazionigeo.intersects(quartiere.geometry.squeeze())]
-    print(quartiere)
-    print(stazionigeo)
-    return render_template('elenco.html',risultato=stazioniQuartiere.to_html())
+    
+    return render_template('elenco1.html',risultato=stazioniQuartiere.to_html())
+
+@app.route("/mappa", methods=["GET"])
+def mappa():
+    
+    fig, ax = plt.subplots(figsize = (12,8))
+
+    stazioniQuartiere.to_crs(epsg=3857).plot(ax=ax,color='black')
+    quartiere.to_crs(epsg=3857).plot(ax=ax,alpha=0.3,edgecolor='k')
+    contextily.add_basemap(ax=ax)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(output)
+    
+    return Response(output.getvalue(), mimetype='image/png')
+
+@app.route("/dropdown", methods=["GET"])
+def dropdown():
+    nomi_Stazioni = stazioni.OPERATORE.to_list()
+    nomi_Stazioni = list(set(nomi_Stazioni))
+    nomi_Stazioni.sort()
+
+    return render_template('dropdown.html',stazioni=nomi_Stazioni)
+
+@app.route("/sceltastazione", methods=["GET"])
+def sceltastazione():
+    global quartiere1,stazioneUtente
+    #controlla quello che l'utente ha selezionato nel menu a tendina
+    stazione = request.args['stazione']  
+    #cerca nel geodataframe la stazionec corrispondente alla stazione selezionata dall'utente
+    stazioneUtente = stazionigeo[stazionigeo.OPERATORE== stazione] 
+    # 
+    quartiere1 = quartieri[quartieri.contains(stazioneUtente.geometry.squeeze())]
+
+    return render_template('vistastazione.html',quartiere = quartiere1)
+
+@app.route("/mappaquar", methods=["GET"])
+def mappaquar():
+    fig, ax = plt.subplots(figsize = (12,8))
+
+    stazioneUtente.to_crs(epsg=3857).plot(ax=ax,color='black')
+    quartiere1.to_crs(epsg=3857).plot(ax=ax,alpha=0.3,edgecolor='k')
+    contextily.add_basemap(ax=ax)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(output)
+    
+    return Response(output.getvalue(), mimetype='image/png')
+
 
 
 
