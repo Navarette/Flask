@@ -36,24 +36,13 @@ def numero():
 @app.route("/ricerca", methods=["GET"])
 def ricerca():
     global lunghezzautente
-    lunghezza = request.args['lunghezza']
-    lunghezza1 = request.args['lunghezza1']
-    lunghezzautente = tram[(tram['lung_km']>lunghezza)&(tram['lung_km']<lunghezza1)]
-    lunghezzautente = lunghezzautente.sort_values(by)
+    lunghezza = request.args['linea']
+    lunghezza1 = request.args['linea']
+    lunghezzautente = tram[(tram['linea']>lunghezza)&(tram['linea']<lunghezza1)]
+    lunghezzautente = lunghezzautente.sort_values(by='linea',ascending=True)
     return  render_template('risultato.html',risultato=lunghezzautente.to_html())
 
-@app.route("/mappa", methods=["GET"])
-def mappa():
-    fig, ax = plt.subplots(figsize = (12,8))
 
-    lunghezzautente.to_crs(epsg=3857).plot(ax=ax,color='black')
-    quartieri.to_crs(epsg=3857).plot(ax=ax,alpha=0.3,edgecolor='k')
-    contextily.add_basemap(ax=ax)
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    FigureCanvas(fig).print_png(output)
-    
-    return Response(output.getvalue(), mimetype='image/png')
 
 
 
