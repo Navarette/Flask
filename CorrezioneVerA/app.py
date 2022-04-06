@@ -14,9 +14,9 @@ import pandas as pd
 stazioni = pd.read_csv('/workspace/Flask/CorrezioneVerA/static/coordfix_ripetitori_radiofonici_milano_160120_loc_final.csv',sep=';')
 stazionigeo = gpd.read_file('/workspace/Flask/CorrezioneVerA/static/ds710_coordfix_ripetitori_radiofonici_milano_160120_loc_final.geojson')
 quartieri = gpd.read_file('/workspace/Flask/CorrezioneVerA/static/ds964_nil_wm-20220322T104418Z-001 (1).zip')
-@app.route("/", methods=["GET"])
 
 # ES1
+@app.route("/", methods=["GET"])
 def home():
     return render_template("home1.html")
 
