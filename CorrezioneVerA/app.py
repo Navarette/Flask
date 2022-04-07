@@ -69,7 +69,7 @@ def ricerca():
     nomeQuar = request.args['quartiere']
     #cerca nel dataframe quartieri il quartiere corrispondente al quartiere inserito dall'utente 
     quartiere = quartieri[quartieri.NIL.str.contains(nomeQuar)]
-    #controlla i quartieri che intersecano con lil geodataframe stazionigeo
+    #controlla i quartieri che intersecano con il geodataframe stazionigeo
     stazioniQuartiere = stazionigeo[stazionigeo.intersects(quartiere.geometry.squeeze())]
     
     return render_template('elenco1.html',risultato=stazioniQuartiere.to_html())
@@ -105,7 +105,7 @@ def sceltastazione():
     global quartiere1,stazioneUtente
     #controlla quello che l'utente ha selezionato nel menu a tendina
     stazione = request.args['stazione']  
-    #cerca nel geodataframe la stazionec corrispondente alla stazione selezionata dall'utente
+    #cerca nel geodataframe la stazione corrispondente alla stazione selezionata dall'utente
     stazioneUtente = stazionigeo[stazionigeo.OPERATORE== stazione] 
     #controlla  i quartieri che contengono la stazione inserita dall'utente
     quartiere1 = quartieri[quartieri.contains(stazioneUtente.geometry.squeeze())]
