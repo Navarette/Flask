@@ -1,8 +1,8 @@
 <form action="/sceltalinea" method = "GET">
     <select name="linea">
-        {% for stazione in linee%}
-        <option value="{{linee}}" >{{linee}}</option>
+        {% for i in linee%}
+        <option value="{{i}}" >{{i}}</option>
         {%endfor%}
-    </select>
+      </select>
     <p><input type = "submit" value = "Submit" /></p>
 </form>
