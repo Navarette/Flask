@@ -11,6 +11,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 
+comuni = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/Com01012021_g-20220419T124103Z-001.zip')
+
 # ES1
 @app.route("/", methods=["GET"])
 def home():
@@ -19,7 +21,7 @@ def home():
 @app.route("/selezione", methods=["GET"])
 def selezione():
     scelta = request.args['scelta']
-    #in base alla scelta del radio button ti porta a diverse rotte
+
     if scelta == 'es1':
         return redirect(url_for('input'))
     elif scelta == 'es2':
@@ -34,19 +36,19 @@ def input():
 @app.route("/ricerca", methods=["GET"])
 def ricerca():
     global stazioniQuartiere ,quartiere
-    nomeQuar = request.args['quartiere']
-    quartiere = quartieri[quartieri.NIL.str.contains(nomeQuar)]
-    stazioniQuartiere = stazionigeo[stazionigeo.intersects(quartiere.geometry.squeeze())]
-    
-    return render_template('elenco1.html',risultato=stazioniQuartiere.to_html())
+    nomeCom = request.args['comune']
+    comune = comuni[comuni.NIL.str.contains(nomeCom)]
+    comunilimitrofi = comuni[comuni.touches(comune.geometry.squeeze())]
+    area = comune.area()
+    return render_template('elenco.html',risultato=comunilimitrofi.to_html(),area=area)
 
 @app.route("/mappa", methods=["GET"])
 def mappa():
     
     fig, ax = plt.subplots(figsize = (12,8))
 
-    stazioniQuartiere.to_crs(epsg=3857).plot(ax=ax,color='black')
-    quartiere.to_crs(epsg=3857).plot(ax=ax,alpha=0.3,edgecolor='k')
+    comune.to_crs(epsg=3857).plot(ax=ax,color='black')
+    comuni.to_crs(epsg=3857).plot(ax=ax,alpha=0.3,edgecolor='k')
     contextily.add_basemap(ax=ax)
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
@@ -57,4 +59,4 @@ def mappa():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=1234, debug=True)
+  app.run(host='0.0.0.0', port=1235, debug=True)
