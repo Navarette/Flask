@@ -39,8 +39,8 @@ def ricerca():
     nomeCom = request.args['comune']
     comune = comuni[comuni.COMUNE.str.contains(nomeCom)]
     comunilimitrofi = comuni[comuni.touches(comune.geometry.squeeze())]
-  # area = comune.area()
-    return render_template('elenco.html',risultato=comunilimitrofi.to_html())
+    area = comune.geometry.area()
+    return render_template('elenco.html',risultato=comunilimitrofi.to_html(),area=area)
 
 @app.route("/mappa", methods=["GET"])
 def mappa():
