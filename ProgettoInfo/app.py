@@ -11,6 +11,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import folium
+# pip install flask geopandas matplotlib contextily pandas folium
 
 quartieri = gpd.read_file('/workspace/Flask/ProgettoInfo/static/ds964_nil_wm-20220502T120333Z-001.zip')
 
@@ -20,9 +21,9 @@ def home():
 
 @app.route("/selezione", methods=["GET"])
 def selezione():
-    m = folium.Map(location=[45.46, 9.18], zoom_start=10, tiles='CartoDB positron')
+    m = folium.Map(location=[45.46, 9.18], zoom_start=12, tiles='CartoDB positron')
 
-    shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.1)
+    shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
     shapes = folium.GeoJson(data=shapes, style_function=lambda x: {'fillColor': 'blue'})
     shapes.add_to(m)
