@@ -22,7 +22,7 @@ def home():
 @app.route("/selezione", methods=["GET"])
 def selezione():
     m = folium.Map(location=[45.46, 9.18], zoom_start=12, tiles='CartoDB positron')
-
+    
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
     shapes = folium.GeoJson(data=shapes, style_function=lambda x: {'fillColor': 'blue'})
