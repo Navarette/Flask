@@ -39,7 +39,7 @@ def ricerca():
     nomeCom = request.args['comune']
     comuneUtente = comuni[comuni['COMUNE'] == nomeCom]
     comunilimitrofi = comuni[comuni.touches(comuneUtente.geometry.squeeze())]
-    area = comuneUtente.geometry.area()
+    area = comuneUtente.geometry.area
     return render_template('elenco.html',risultato=comunilimitrofi.to_html(),area=area)
 
 @app.route("/mappa", methods=["GET"])
@@ -47,7 +47,7 @@ def mappa():
     
     fig, ax = plt.subplots(figsize = (12,8))
 
-    comune.to_crs(epsg=3857).plot(ax=ax,color='black')
+    comuneUtente.to_crs(epsg=3857).plot(ax=ax,edgecolor='black',facecolor='none')
     comuni.to_crs(epsg=3857).plot(ax=ax,alpha=0.3,edgecolor='k')
     contextily.add_basemap(ax=ax)
     output = io.BytesIO()
