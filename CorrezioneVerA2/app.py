@@ -35,11 +35,11 @@ def input():
 
 @app.route("/ricerca", methods=["GET"])
 def ricerca():
-    global comune
+    global comuneUtente
     nomeCom = request.args['comune']
-    comune = comuni[comuni.COMUNE.str.contains(nomeCom)]
-    comunilimitrofi = comuni[comuni.touches(comune.geometry.squeeze())]
-    area = comune.geometry.area()
+    comuneUtente = comuni[comuni['COMUNE'] == nomeCom]
+    comunilimitrofi = comuni[comuni.touches(comuneUtente.geometry.squeeze())]
+    area = comuneUtente.geometry.area()
     return render_template('elenco.html',risultato=comunilimitrofi.to_html(),area=area)
 
 @app.route("/mappa", methods=["GET"])
