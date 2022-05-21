@@ -14,6 +14,7 @@ import pandas as pd
 comuni = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/Com01012021_g-20220419T124103Z-001.zip')
 province = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/ProvCM01012021_g-20220419T124111Z-001.zip')
 regioni = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/Reg01012021_g-20220419T124115Z-001.zip')
+
 # ES1
 @app.route("/", methods=["GET"])
 def home():
@@ -57,6 +58,7 @@ def sceltaprov():
 
     return render_template('sceltaprov.html',comune2 = comprov["COMUNE"].sort_values(ascending = True))
 
+# ES 3
 @app.route("/dropdown1", methods=["GET"])
 def dropdown1():  
     return render_template('dropdown1.html',regione2 = regioni['DEN_REG'].sort_values(ascending = True))
