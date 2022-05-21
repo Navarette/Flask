@@ -13,7 +13,7 @@ import pandas as pd
 
 comuni = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/Com01012021_g-20220419T124103Z-001.zip')
 province = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/ProvCM01012021_g-20220419T124111Z-001.zip')
-
+regioni = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/Reg01012021_g-20220419T124115Z-001.zip')
 # ES1
 @app.route("/", methods=["GET"])
 def home():
@@ -41,11 +41,12 @@ def ricerca():
     comuneUtente = comuni[comuni['COMUNE'] == nomeCom]
     comunilimitrofi = comuni[comuni.touches(comuneUtente.geometry.squeeze())]
     area = comuneUtente.geometry.area
-    return render_template('elenco.html',risultato=comunilimitrofi.to_html(),area=area)
+    return render_template('elenco.html',risultato = comunilimitrofi.to_html(),area=area)
 
+#ES 2
 @app.route("/dropdown", methods=["GET"])
 def dropdown():  
-    return render_template('dropdown.html',provincia=provincia_NOME)
+    return render_template('dropdown.html',province2 = province['DEN_UTS'].sort_values(ascending = True))
 
 @app.route("/sceltaprov", methods=["GET"])
 def sceltaprov():  
@@ -54,14 +55,21 @@ def sceltaprov():
     provinciaUtente = province[province['DEN_UTS'] == provincia]
     comprov = comuni[comuni.within(provinciaUtente.geometry.squeeze())]
 
-    return render_template('sceltaprov.html')
+    return render_template('sceltaprov.html',comune2 = comprov["COMUNE"].sort_values(ascending = True))
 
-@app.route("/sceltacom", methods=["GET"])
-def sceltacom(): 
-    comune = request.args['comune']
-    comuneUtente = comuni[comuni['COMUNE'] == comune]
+@app.route("/dropdown1", methods=["GET"])
+def dropdown1():  
+    return render_template('dropdown1.html',regione2 = regioni['DEN_REG'].sort_values(ascending = True))
 
-    return render_template('sceltacom.html')
+@app.route("/sceltareg", methods=["GET"])
+def sceltareg():  
+    
+    regione = request.args['regione']
+    regioneUtente = regioni[regioni['DEN_REG'] == regione]
+    regprov = province[province.within(regioneUtente.geometry.squeeze())]
+    return render_template('sceltareg.html',province2 = regprov["DEN_UTS"].sort_values(ascending = True))
+
+
 
 
 @app.route("/mappa", methods=["GET"])

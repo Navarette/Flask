@@ -1,0 +1,8 @@
+<form action="/sceltareg" method = "GET">
+    <select name="regione">
+        {% for regione in regione2%}
+        <option value="{{regione}}" >{{regione}}</option>
+        {%endfor%}
+    </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>

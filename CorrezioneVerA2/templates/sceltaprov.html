@@ -1,6 +1,6 @@
-<form action="/sceltacom" method = "GET">
+<form action="/ricerca" method = "GET">
     <select name="comune">
-        {% for comune in comuni%}
+        {% for comune in comune2%}
         <option value="{{comune}}" >{{comune}}</option>
         {%endfor%}
     </select>
