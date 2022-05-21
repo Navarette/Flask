@@ -1,0 +1,8 @@
+<form action="/sceltacom" method = "GET">
+    <select name="comune">
+        {% for comune in comuni%}
+        <option value="{{comune}}" >{{comune}}</option>
+        {%endfor%}
+    </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>

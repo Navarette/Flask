@@ -1,0 +1,8 @@
+<form action="/regRip" method = "GET">
+    <select name="Ripartizione">
+        {% for rip in ripartizioni2%}
+        <option value="{{rip}}" >{{rip}}</option>
+        {%endfor%}
+      </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>

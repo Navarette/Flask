@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 comuni = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/Com01012021_g-20220419T124103Z-001.zip')
+province = gpd.read_file('/workspace/Flask/CorrezioneVerA2/static/ProvCM01012021_g-20220419T124111Z-001.zip')
 
 # ES1
 @app.route("/", methods=["GET"])
@@ -41,6 +42,27 @@ def ricerca():
     comunilimitrofi = comuni[comuni.touches(comuneUtente.geometry.squeeze())]
     area = comuneUtente.geometry.area
     return render_template('elenco.html',risultato=comunilimitrofi.to_html(),area=area)
+
+@app.route("/dropdown", methods=["GET"])
+def dropdown():  
+    return render_template('dropdown.html',provincia=provincia_NOME)
+
+@app.route("/sceltaprov", methods=["GET"])
+def sceltaprov():  
+    
+    provincia = request.args['provincia']
+    provinciaUtente = province[province['DEN_UTS'] == provincia]
+    comprov = comuni[comuni.within(provinciaUtente.geometry.squeeze())]
+
+    return render_template('sceltaprov.html')
+
+@app.route("/sceltacom", methods=["GET"])
+def sceltacom(): 
+    comune = request.args['comune']
+    comuneUtente = comuni[comuni['COMUNE'] == comune]
+
+    return render_template('sceltacom.html')
+
 
 @app.route("/mappa", methods=["GET"])
 def mappa():

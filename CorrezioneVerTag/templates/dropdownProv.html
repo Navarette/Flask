@@ -1,0 +1,8 @@
+<form action="/comProv" method = "GET">
+    <select name="Prov">
+        {% for prov in province2%}
+        <option value="{{prov}}" >{{prov}}</option>
+        {%endfor%}
+      </select>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
